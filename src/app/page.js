@@ -1,9 +1,9 @@
 import Image from "next/image";
 import styles from "./page.module.css";
-
+import { env } from '../lib/env';
 
 export default function Home() {
-
+  const dbUrl = env.DATABASE_URL;
 
   return (
     <main className={styles.main}>
@@ -11,6 +11,7 @@ export default function Home() {
         <p>
           Get started by editing&nbsp;
           <code className={styles.code}>src/app/page.js</code>
+          <p>{dbUrl}</p>
         </p>
         <div>
           <a
