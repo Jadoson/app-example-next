@@ -1,99 +1,81 @@
-import Image from "next/image";
-import styles from "./page.module.css";
-import { env } from '../lib/env';
+"use client";
 
 export default function Home() {
-  const dbUrl = env.DATABASE_URL;
+  const variables = Object.entries(__ALL_ENV__)
+    .sort(([a], [b]) => a.localeCompare(b));
 
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.js</code>
-          <p>{dbUrl}</p>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
+    <main
+      style={{
+        padding: "40px",
+        fontFamily: "Arial, sans-serif",
+        maxWidth: "1600px",
+        margin: "0 auto",
+      }}
+    >
+      <h1>Environment Variables</h1>
 
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
+      <p>
+        Found <strong>{variables.length}</strong> environment variables.
+      </p>
 
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
+      <table
+        style={{
+          borderCollapse: "collapse",
+          width: "100%",
+          marginTop: "20px",
+        }}
+      >
+        <thead>
+          <tr>
+            <th style={thStyle}>Key</th>
+            <th style={thStyle}>Value</th>
+            <th style={{ ...thStyle, width: "100px" }}>Length</th>
+          </tr>
+        </thead>
 
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
+        <tbody>
+          {variables.map(([key, value]) => {
+            const stringValue = String(value ?? "");
 
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
+            return (
+              <tr key={key}>
+                <td style={tdStyle}>{key}</td>
 
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
+                <td
+                  style={{
+                    ...tdStyle,
+                    wordBreak: "break-all",
+                  }}
+                >
+                  {stringValue}
+                </td>
+
+                <td
+                  style={{
+                    ...tdStyle,
+                    textAlign: "right",
+                  }}
+                >
+                  {stringValue.length}
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
     </main>
   );
 }
+
+const thStyle = {
+  border: "1px solid #ccc",
+  padding: "10px",
+  textAlign: "left",
+  background: "#f5f5f5",
+};
+
+const tdStyle = {
+  border: "1px solid #ccc",
+  padding: "10px",
+};
