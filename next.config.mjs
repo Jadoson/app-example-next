@@ -1,24 +1,16 @@
-import webpack from "webpack";
+import fs from "fs";
+import path from "path";
+
+const envFile = path.join(process.cwd(), "src", "generated-env.js");
+
+fs.writeFileSync(
+  envFile,
+  `export const ALL_ENV = ${JSON.stringify(process.env)};\n`
+);
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: "export",
-
-  webpack: (config) => {
-    const env = {};
-
-    for (const [key, value] of Object.entries(process.env)) {
-      env[key] = value;
-    }
-
-    config.plugins.push(
-      new webpack.DefinePlugin({
-        __ALL_ENV__: JSON.stringify(env),
-      })
-    );
-
-    return config;
-  },
 };
 
 export default nextConfig;
