@@ -1,7 +1,9 @@
 "use client";
 
+import { ALL_ENV } from "../generated-env";
+
 export default function Home() {
-  const variables = Object.entries(__ALL_ENV__).sort(([a], [b]) =>
+  const variables = Object.entries(ALL_ENV).sort(([a], [b]) =>
     a.localeCompare(b)
   );
 
