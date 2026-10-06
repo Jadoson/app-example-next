@@ -1,7 +1,7 @@
 "use client";
 
 export default function Home() {
-  const variables = Object.entries(__ALL_ENV__)
+  const variables = Object.entries(process.env)
     .sort(([a], [b]) => a.localeCompare(b));
 
   return (
@@ -41,7 +41,6 @@ export default function Home() {
             return (
               <tr key={key}>
                 <td style={tdStyle}>{key}</td>
-
                 <td
                   style={{
                     ...tdStyle,
@@ -50,7 +49,6 @@ export default function Home() {
                 >
                   {stringValue}
                 </td>
-
                 <td
                   style={{
                     ...tdStyle,
